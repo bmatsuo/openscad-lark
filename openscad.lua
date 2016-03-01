@@ -30,13 +30,13 @@ end
 openscad.exec = function(output, scad, opt)
     bin = getbin(scad)
     args = openscad.args(output, scad)
-    lark.exec(bin, args, opt)
+    lark.exec{bin, args, opt}
 end
 
 openscad.start = function(output, scad, opt)
     bin = getbin(scad)
     args = openscad.args(output, scad)
-    lark.start(bin, args, opt)
+    lark.start{bin, args, opt}
 end
 
 return openscad
