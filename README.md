@@ -2,6 +2,15 @@
 
 An OpenSCAD module for the lark build system.
 
+##Example
+
+```lua
+local output = 'foo.stl'
+local model = openscad.model('foo.scad')
+table.insert(model.vars, 'Width=100')
+table.insert(model.vars, 'Height=100')
+openscad.exec(output, model)
+```
 
 ##Install
 
