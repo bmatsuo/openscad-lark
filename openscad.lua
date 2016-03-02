@@ -12,31 +12,41 @@ openscad.model = function(path)
 end
 
 openscad.args = function(output, scad, opt)
-    args = {'-o', output, '-m', 'lark'}
+    local args = {'-o', output, '-m', 'lark'}
     if scad.deps_file then
         table.insert(args, '-d')
         table.insert(args, scad.deps_file)
     end
-    if scad.vars and #scad.vars > 0 then
+    for _, var in pairs(scad.vars or {}) do
         table.insert(args, '-D')
-        for _, var in pairs(scad.vars or {}) do
-            table.insert(args, var)
-        end
+        table.insert(args, var)
     end
     table.insert(args, scad.path)
     return args
 end
 
+local function cmd(bin, args, opt)
+    local cmd = {bin, args}
+    if opt then
+        for k, v in pairs(opt) do
+            if type(k) == 'string' then
+                cmd[k] = v
+            end
+        end
+    end
+    return cmd
+end
+
 openscad.exec = function(output, scad, opt)
-    bin = getbin(scad)
-    args = openscad.args(output, scad)
-    lark.exec{bin, args, opt}
+    local bin = getbin(scad)
+    local args = openscad.args(output, scad)
+    lark.exec(cmd(bin, args, opt))
 end
 
 openscad.start = function(output, scad, opt)
-    bin = getbin(scad)
-    args = openscad.args(output, scad)
-    lark.start{bin, args, opt}
+    local bin = getbin(scad)
+    local args = openscad.args(output, scad)
+    lark.start(cmd(bin, args, opt))
 end
 
 return openscad
