@@ -1,5 +1,12 @@
 local doc = require('doc')
-local openscad = {}
+local openscad =
+    doc.desc[[
+    Utilities for compiling OpenSCAD models.  Models are defined using the
+    openscad.model() function and executing using openscad.exec() or
+    openscad.start().  To manually construct and execute OpenSCAD commands the
+    helper function openscad.args() can be used.
+    ]] ..
+    {}
 
 local function getbin(scad)
     if scad and scad.bin then
